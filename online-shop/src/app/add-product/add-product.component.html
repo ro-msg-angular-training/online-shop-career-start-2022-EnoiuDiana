@@ -1,0 +1,55 @@
+<div class = "container-1">
+
+  <div class="container-1" [formGroup]="addProductForm" >
+
+    <mat-form-field>
+    <input matInput type="text" placeholder = "name" formControlName = "name">
+    <mat-error *ngIf="name!.invalid && name!.touched">
+      Field must not be empty
+    </mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <input matInput type="text" placeholder = "category" formControlName = "category">
+      <mat-error *ngIf="category!.invalid && category!.touched">
+        Field must not be empty
+      </mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <textarea matInput type="text" placeholder = "image" formControlName = "image"></textarea>
+      <mat-error *ngIf="image!.invalid && image!.touched">
+        Field must not be empty
+      </mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <input matInput type="text" placeholder = "price" formControlName = "price">
+      <mat-error *ngIf="price!.invalid && price!.touched">
+        Price must be a number
+      </mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <textarea matInput type="text" placeholder = "description" formControlName = "description"></textarea>
+      <mat-error *ngIf="description!.invalid && description!.touched">
+        Field must not be empty
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button
+            [disabled]="addProductForm.invalid"
+            color="primary" type="submit" (click)="submitHandler()">Submit changes</button>
+
+    <button mat-raised-button color="warn" type="button" (click)="goBack()">Cancel</button>
+
+  </div>
+</div>
