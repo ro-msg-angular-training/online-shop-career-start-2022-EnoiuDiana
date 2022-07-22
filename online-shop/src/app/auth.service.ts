@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,6 @@ import {HttpClient} from "@angular/common/http";
 export class AuthService {
 
   isLoggedIn = false;
-  readonly ROOT_URL = "http://localhost:3000"
 
   constructor(private http: HttpClient) { }
 
@@ -17,20 +17,22 @@ export class AuthService {
   redirectUrl: string | null = null;
 
   login(username: string, password: string) {
-    let data = {
+    const data = {
       username: username,
       password: password
     }
-    return this.http.post(this.ROOT_URL + "/login", data)
+    return this.http.post(environment.ROOT_URL + "/login", data)
   }
 
   changeLogInTrue(userLoggedIn: any) {
     this.isLoggedIn = true;
-
     localStorage.setItem("loggedInUsername", userLoggedIn.username)
     localStorage.setItem("loggedInPassword", userLoggedIn.password)
     localStorage.setItem("loggedInRoles", userLoggedIn.roles)
-    console.log(localStorage.getItem("loggedInRoles"))
+  }
+
+  getLoggedInUsername() {
+    return localStorage.getItem("loggedInUsername")
   }
 
   changeLogInFalse() {

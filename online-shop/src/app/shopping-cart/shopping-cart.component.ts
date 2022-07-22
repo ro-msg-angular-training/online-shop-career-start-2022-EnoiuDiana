@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductsService} from "../products.service";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-shopping-cart',
@@ -12,11 +13,10 @@ export class ShoppingCartComponent implements OnInit {
 
   orderPlaced = false;
 
-  constructor(private productService: ProductsService) { }
+  constructor(private productService: ProductsService, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.productsInCart = this.productService.getProductsAddedToCart()
-    console.log(this.productsInCart)
   }
 
   checkout() {
@@ -28,8 +28,8 @@ export class ShoppingCartComponent implements OnInit {
       dataProducts.push({productId, quantity})
     }
 
-    let data = {
-      "customer": "doej",
+    const data = {
+      "customer": this.auth.getLoggedInUsername(),
       "products": dataProducts
     }
     this.productService.checkout(data).subscribe(

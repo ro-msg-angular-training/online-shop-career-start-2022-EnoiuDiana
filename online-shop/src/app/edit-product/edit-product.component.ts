@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {ProductsService} from "../products.service";
-import {tap, first} from "rxjs/operators";
+import {Product} from "../Product";
+import {Subject, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.scss']
 })
-export class EditProductComponent implements OnInit {
+export class EditProductComponent implements OnInit, OnDestroy {
 
-  product: any;
+  product: Product | undefined;
 
   editProductForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.pattern("(.|\\s)*\\S(.|\\s)*")]),
@@ -22,25 +23,25 @@ export class EditProductComponent implements OnInit {
     description: new FormControl('', [Validators.required, Validators.pattern("(.|\\s)*\\S(.|\\s)*")])
   })
 
-  //form state
-  loading = false;
-  success = false;
+  productSubs: Subscription | undefined
+
 
   constructor(private fb: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
-              private location: Location) { }
+              private router: Router) { }
 
   ngOnInit(): void {
     this.getProduct()
+  }
 
-    this.editProductForm.valueChanges.subscribe(console.log)
-
+  ngOnDestroy() {
+    this.productSubs?.unsubscribe()
   }
 
   getProduct() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.productsService.getProductById(id)
+    const id = parseInt(<string>this.route.snapshot.paramMap.get('id'));
+    this.productSubs =  this.productsService.getProductById(id)
       .subscribe(product => {
         this.product = product
         this.initializeForm()
@@ -49,20 +50,19 @@ export class EditProductComponent implements OnInit {
 
   initializeForm() {
     this.editProductForm.setValue({
-      name: [this.product.name],
-      category: [this.product.category],
-      image: [this.product.image],
-      price: [this.product.price],
-      description: [this.product.description]
+      name: [this.product?.name],
+      category: [this.product?.category],
+      image: [this.product?.image],
+      price: [this.product?.price],
+      description: [this.product?.description]
     })
   }
 
-  async submitHandler() {
-    this.loading = true;
+  submitHandler() {
     const formValue = this.editProductForm.value;
 
-    let data = {
-      "id": this.product.id,
+    const data = {
+      "id": this.product?.id,
       "name": formValue.name,
       "category": formValue.category,
       "image": formValue.image,
@@ -70,9 +70,7 @@ export class EditProductComponent implements OnInit {
       "description": formValue.description
     }
 
-    console.log(data)
-
-    await this.productsService.updateProducts(this.product.id, data).subscribe(val => {
+    this.productsService.updateProducts(this.product?.id, data).subscribe(val => {
         console.log("PUT call successful value returned in body",
           val);
       },
@@ -88,7 +86,7 @@ export class EditProductComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigate(["show_products/" + this.product?.id]).then();
   }
 
   get price() {

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProductsService} from "../products.service";
-import {ActivatedRoute} from "@angular/router";
-import {Location} from "@angular/common";
-import {F} from "@angular/cdk/keycodes";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-product',
@@ -20,25 +18,19 @@ export class AddProductComponent implements OnInit {
     description: new FormControl('', [Validators.required, Validators.pattern("(.|\\s)*\\S(.|\\s)*")])
   })
 
-  //form state
-  loading = false;
-  success = false;
-
   constructor(private fb: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
-              private location: Location) { }
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.addProductForm.valueChanges.subscribe(console.log)
   }
 
 
-  async submitHandler() {
-    this.loading = true;
+  submitHandler() {
     const formValue = this.addProductForm.value;
 
-    let data = {
+    const data = {
       "name": formValue.name,
       "category": formValue.category,
       "image": formValue.image,
@@ -46,9 +38,7 @@ export class AddProductComponent implements OnInit {
       "description": formValue.description
     }
 
-    console.log(data)
-
-    await this.productsService.addProduct(data).subscribe(
+    this.productsService.addProduct(data).subscribe(
       (val) => {
         console.log("POST call successful value returned in body",
           val);
@@ -58,17 +48,14 @@ export class AddProductComponent implements OnInit {
         },
         () => {
           console.log("The POST observable is now completed.");
-        });
+        })
 
     this.goBack();
-
-    this.loading = false;
-    this.success = true;
 
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigate(["show_products"]).then();
   }
 
   get price() {

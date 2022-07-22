@@ -25,14 +25,14 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async submitLogin() {
+  submitLogin() {
     const formValue = this.loginForm.value;
-    const login = await this.auth.login(formValue.username, formValue.password);
-    login.subscribe(
+    this.auth.login(formValue.username, formValue.password).subscribe(
       (val) => {
         console.log("POST call successful value returned in body",
           val);
         this.auth.changeLogInTrue(val)
+
         //update states
         this.loggedInSuccessful = true;
         this.loggInFail = false;
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
       () => {
         console.log("The POST observable is now completed.");
       }
-    );
+    )
   }
 
 }

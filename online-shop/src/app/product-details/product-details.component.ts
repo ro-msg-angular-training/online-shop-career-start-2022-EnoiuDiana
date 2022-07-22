@@ -1,23 +1,26 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {audit, Observable, of} from "rxjs";
+import {audit, Observable, of, Subscription} from "rxjs";
 import {ProductsService} from "../products.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import { Location } from '@angular/common';
 import {HttpClient} from "@angular/common/http";
 import {FormControl, FormGroup} from "@angular/forms";
 import {AuthService} from "../auth.service";
+import {Product} from "../Product";
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
 
-  product: any;
-  id: any;
+  product: Product | undefined;
+  id: number | undefined;
   userIsAdmin = false;
   userIsCustomer = false;
+
+  productSubs: Subscription | undefined
 
   quantityForm: FormGroup = new FormGroup({
     quantity: new FormControl(''),
@@ -25,7 +28,7 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(private productsService: ProductsService,
               private route: ActivatedRoute,
-              private location: Location,
+              private router: Router,
               private auth: AuthService) { }
 
   ngOnInit(): void {
@@ -33,9 +36,13 @@ export class ProductDetailsComponent implements OnInit {
     this.getUserRoles()
   }
 
+  ngOnDestroy() {
+    this.productSubs?.unsubscribe()
+  }
+
   getProduct(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.productsService.getProductById(this.id)
+    this.id = parseInt(<string>this.route.snapshot.paramMap.get('id'));
+    this.productSubs = this.productsService.getProductById(this.id)
       .subscribe(product => this.product = product);
   }
 
@@ -45,7 +52,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigate(["show_products"]).then();
   }
 
   deleteProduct(id: number) {
@@ -60,10 +67,10 @@ export class ProductDetailsComponent implements OnInit {
       () => {
         console.log("The POST observable is now completed.");
       });
-    this.location.back();
+    this.goBack()
   }
 
-  async addToCartButtonPressed() {
+  addToCartButtonPressed() {
     const formValue = this.quantityForm.value;
     this.productsService.addProductToCart(this.product, formValue.quantity)
     this.goBack()

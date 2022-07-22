@@ -9,15 +9,14 @@ import { AuthService} from "./auth.service";
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<UrlTree> {
     const url: string = state.url;
 
     return this.check(url, route);
   }
 
-  check(url: string, route: ActivatedRouteSnapshot): boolean | UrlTree {
+  check(url: string, route: ActivatedRouteSnapshot): boolean | Promise<UrlTree> {
     if (this.authService.isLoggedIn) {
-      console.log(route.data['roles'])
       if (route.data['roles']) {
         let roles = localStorage.getItem("loggedInRoles")
         return route.data['roles'].some((ai: any) => roles != null && roles.includes(ai));
@@ -30,6 +29,6 @@ export class AuthGuard implements CanActivate {
     this.authService.redirectUrl = url;
 
     // Redirect to the login page
-    return this.router.parseUrl('/login');
+    return this.router.navigate(['/login']).then();
   }
 }
