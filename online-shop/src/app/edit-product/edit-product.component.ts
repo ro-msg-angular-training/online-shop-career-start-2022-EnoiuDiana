@@ -1,0 +1,112 @@
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Location} from "@angular/common";
+import {ProductsService} from "../products.service";
+import {Product} from "../Product";
+import {Subject, Subscription} from "rxjs";
+
+@Component({
+  selector: 'app-edit-product',
+  templateUrl: './edit-product.component.html',
+  styleUrls: ['./edit-product.component.scss']
+})
+export class EditProductComponent implements OnInit, OnDestroy {
+
+  product: Product | undefined;
+
+  editProductForm: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.pattern("(.|\\s)*\\S(.|\\s)*")]),
+    category: new FormControl('', [Validators.required, Validators.pattern("(.|\\s)*\\S(.|\\s)*")]),
+    image: new FormControl('', [Validators.required, Validators.pattern("(.|\\s)*\\S(.|\\s)*")]),
+    price: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
+    description: new FormControl('', [Validators.required, Validators.pattern("(.|\\s)*\\S(.|\\s)*")])
+  })
+
+  productSubs: Subscription | undefined
+
+
+  constructor(private fb: FormBuilder,
+              private productsService: ProductsService,
+              private route: ActivatedRoute,
+              private router: Router) { }
+
+  ngOnInit(): void {
+    this.getProduct()
+  }
+
+  ngOnDestroy() {
+    this.productSubs?.unsubscribe()
+  }
+
+  getProduct() {
+    const id = parseInt(<string>this.route.snapshot.paramMap.get('id'));
+    this.productSubs =  this.productsService.getProductById(id)
+      .subscribe(product => {
+        this.product = product
+        this.initializeForm()
+      });
+  }
+
+  initializeForm() {
+    this.editProductForm.setValue({
+      name: [this.product?.name],
+      category: [this.product?.category],
+      image: [this.product?.image],
+      price: [this.product?.price],
+      description: [this.product?.description]
+    })
+  }
+
+  submitHandler() {
+    const formValue = this.editProductForm.value;
+
+    const data = {
+      "id": this.product?.id,
+      "name": formValue.name,
+      "category": formValue.category,
+      "image": formValue.image,
+      "price": formValue.price,
+      "description": formValue.description
+    }
+
+    this.productsService.updateProducts(this.product?.id, data).subscribe(val => {
+        console.log("PUT call successful value returned in body",
+          val);
+      },
+      response => {
+        console.log("PUT call in error", response);
+      },
+      () => {
+        console.log("The PUT observable is now completed.");
+      });
+
+    this.goBack();
+
+  }
+
+  goBack(): void {
+    this.router.navigate(["show_products/" + this.product?.id]).then();
+  }
+
+  get price() {
+    return this.editProductForm.get('price')
+  }
+
+  get name() {
+    return this.editProductForm.get('name')
+  }
+
+  get image() {
+    return this.editProductForm.get('image')
+  }
+
+  get category() {
+    return this.editProductForm.get('category')
+  }
+
+  get description() {
+    return this.editProductForm.get('description')
+  }
+
+}

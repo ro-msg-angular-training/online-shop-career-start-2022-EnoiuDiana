@@ -1,0 +1,37 @@
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+
+p {
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+
+.container-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container-1 div{
+  border: 2px #ccc solid;
+  padding: 10px;
+}
+
+input[type=text] {
+  font: 100% $font-stack;
+  color: $primary-color;
+  font-size: medium;
+}
+
+textarea[type=text] {
+  font: 100% $font-stack;
+  color: $primary-color;
+  font-size: medium;
+  height: 50px;
+}
+
+mat-form-field{
+  width: 600px;
+  height: fit-content;
+}
