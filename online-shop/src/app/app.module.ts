@@ -20,6 +20,14 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import {MatCardModule} from '@angular/material/card';
 import { AddProductComponent } from './add-product/add-product.component';
 import { LoginComponent } from './login/login.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import {productReducer} from "./state/products/product.reducer";
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { ProductEffects} from "./state/products/product.effects";
+import {RouteReuseStrategy} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -43,7 +51,11 @@ import { LoginComponent } from './login/login.component';
     MatButtonModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatCardModule
+    MatCardModule,
+    StoreModule.forRoot({products: productReducer}),
+    EffectsModule.forRoot([ProductEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreRouterConnectingModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

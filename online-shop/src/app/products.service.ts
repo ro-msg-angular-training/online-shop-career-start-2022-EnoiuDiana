@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../environments/environment";
 import {Product} from "./Product";
+import {ProductDisplay} from "./ProductDisplay";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ProductsService {
   }
 
   getProducts() {
-    return this.http.get<Product[]>(environment.ROOT_URL + "/products")
+    return this.http.get<ProductDisplay[]>(environment.ROOT_URL + "/products")
   }
 
   getProductById(id: number): Observable<Product> {
