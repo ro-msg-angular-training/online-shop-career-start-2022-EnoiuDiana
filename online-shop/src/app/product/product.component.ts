@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ProductsService} from "../products.service";
-import {AuthService} from "../auth.service";
-import {Product} from "../Product";
+import {ProductsService} from "../services/products.service";
+import {AuthService} from "../services/auth.service";
+import {Product} from "../product-interfaces/Product";
 import {Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
-import {loadProducts} from "../state/products/product.actions";
-import {selectAllProducts, selectProducts} from "../state/products/product.selectors";
+import {loadProducts} from "../state/actions/product.actions";
+import {selectAllProducts} from "../state/selectors/product.selectors";
 import {AppState} from "../state/app.state";
 
 @Component({
@@ -21,8 +21,6 @@ export class ProductComponent implements OnInit, OnDestroy {
 
 
   public allProducts$ = this.store.select(selectAllProducts);
-
-  productsSubs: Subscription | undefined
 
 
   ngOnInit(): void {

@@ -6,7 +6,7 @@ import {HomeComponent} from "./home/home.component";
 import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
 import {EditProductComponent} from "./edit-product/edit-product.component";
 import {AddProductComponent} from "./add-product/add-product.component";
-import {AuthGuard} from "./auth.guard";
+import {AuthGuard} from "./auth/auth.guard";
 import {LoginComponent} from "./login/login.component";
 
 const routes: Routes = [

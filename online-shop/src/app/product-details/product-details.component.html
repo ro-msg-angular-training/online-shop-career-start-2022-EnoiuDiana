@@ -1,5 +1,5 @@
 <div class="container-1">
-  <div *ngIf="product">
+  <div *ngIf="(productDetails$ | async) as product">
     <h1>{{product.name}}</h1>
     <img src="{{product.image}}">
     <p>{{product.description}}</p>

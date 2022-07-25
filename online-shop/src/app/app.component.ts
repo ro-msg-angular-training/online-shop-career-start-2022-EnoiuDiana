@@ -1,6 +1,6 @@
 import { Component , OnInit} from '@angular/core';
 import {VERSION} from "@angular/compiler";
-import {AuthService} from "./auth.service";
+import {AuthService} from "./services/auth.service";
 
 
 @Component({

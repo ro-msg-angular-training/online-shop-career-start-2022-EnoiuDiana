@@ -2,9 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
-import {ProductsService} from "../products.service";
-import {Product} from "../Product";
+import {ProductsService} from "../services/products.service";
+import {Product} from "../product-interfaces/Product";
 import {Subject, Subscription} from "rxjs";
+import {AppState} from "../state/app.state";
+import {Store} from "@ngrx/store";
+import {editProduct, getProduct} from "../state/actions/product.actions";
+import {selectOneProduct} from "../state/selectors/product.selectors";
 
 @Component({
   selector: 'app-edit-product',
@@ -25,11 +29,13 @@ export class EditProductComponent implements OnInit, OnDestroy {
 
   productSubs: Subscription | undefined
 
-
   constructor(private fb: FormBuilder,
               private productsService: ProductsService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private store: Store<AppState>) { }
+
+  public productDetails$ = this.store.select(selectOneProduct)
 
   ngOnInit(): void {
     this.getProduct()
@@ -41,11 +47,11 @@ export class EditProductComponent implements OnInit, OnDestroy {
 
   getProduct() {
     const id = parseInt(<string>this.route.snapshot.paramMap.get('id'));
-    this.productSubs =  this.productsService.getProductById(id)
-      .subscribe(product => {
-        this.product = product
-        this.initializeForm()
-      });
+    this.store.dispatch(getProduct({id: id}))
+    this.productSubs = this.productDetails$.subscribe((product) => {
+      this.product = product
+      this.initializeForm()
+    })
   }
 
   initializeForm() {
@@ -61,27 +67,20 @@ export class EditProductComponent implements OnInit, OnDestroy {
   submitHandler() {
     const formValue = this.editProductForm.value;
 
-    const data = {
-      "id": this.product?.id,
-      "name": formValue.name,
-      "category": formValue.category,
-      "image": formValue.image,
-      "price": formValue.price,
-      "description": formValue.description
+    if(this.product) {
+      const data: Product = {
+        "id": this.product.id,
+        "name": formValue.name,
+        "category": formValue.category,
+        "image": formValue.image,
+        "price": formValue.price,
+        "description": formValue.description
+      }
+
+      this.store.dispatch(editProduct({id: this.product.id, product: data}))
+
+      this.goBack();
     }
-
-    this.productsService.updateProducts(this.product?.id, data).subscribe(val => {
-        console.log("PUT call successful value returned in body",
-          val);
-      },
-      response => {
-        console.log("PUT call in error", response);
-      },
-      () => {
-        console.log("The PUT observable is now completed.");
-      });
-
-    this.goBack();
 
   }
 
