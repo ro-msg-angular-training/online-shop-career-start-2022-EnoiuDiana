@@ -3,9 +3,9 @@
   <div *ngFor="let product of (allProducts$ | async)">
     <card mat-card-content>
       <h3>{{product.name}}</h3>
-      <p>Category: {{product.category}}</p>
-      <p>Price: {{product.price}}</p>
-      <button mat-raised-button color="basic" type="button" routerLink="/show_products/{{product.id}}">Details</button>
+      <p i18n>Category: {{product.category}}</p>
+      <p i18n>Price: {{product.price}}</p>
+      <button mat-raised-button i18n color="basic" type="button" routerLink="/show_products/{{product.id}}">Details</button>
     </card>
   </div>
 </div>

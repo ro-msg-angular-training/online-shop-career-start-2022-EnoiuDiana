@@ -2,17 +2,17 @@
   <div *ngFor="let product of productsInCart">
     <card mat-card-content>
       <h3>{{product.product.name}}</h3>
-      <p>Category: {{product.product.category}}</p>
-      <p>Price: {{product.product.price}}</p>
-      <p>Quantity: {{product.quantity}}</p>
+      <p i18n>Category: {{product.product.category}}</p>
+      <p i18n>Price: {{product.product.price}}</p>
+      <p i18n>Quantity: {{product.quantity}}</p>
     </card>
   </div>
 </div>
 
 <div class="container-2">
-  <button mat-raised-button color="primary" type="button" (click)="checkout()">Place Order</button>
+  <button mat-raised-button i18n color="primary" type="button" (click)="checkout()">Place Order</button>
 </div>
 
-<div *ngIf="orderPlaced">
+<div i18n *ngIf="orderPlaced">
   Order was placed successfully
 </div>
