@@ -30,7 +30,6 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   submitHandler() {
     const formValue = this.addProductForm.value;
 

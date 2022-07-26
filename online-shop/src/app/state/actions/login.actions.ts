@@ -15,3 +15,7 @@ export const loginFailure = createAction(
   '[Login API] Login failure',
   props<{error: string}>()
 )
+
+export const verifyAdmin = createAction('[Login API] Verify admin')
+
+export const verifyCustomer = createAction('[Login API] Verify customer')

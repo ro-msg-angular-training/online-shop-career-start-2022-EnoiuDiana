@@ -1,6 +1,6 @@
 import {UserCredentials} from "../../interfaces/UserCredentials";
 import {createReducer, on} from "@ngrx/store";
-import {login, loginFailure, loginSuccessful} from "../actions/login.actions";
+import {login, loginFailure, loginSuccessful, verifyAdmin} from "../actions/login.actions";
 import {User} from "../../interfaces/User";
 
 export interface LoginState {
@@ -31,6 +31,6 @@ export const loginReducer = createReducer(
     ...state,
     error: error,
     status: 'error'
-  }))
+  })),
 )
 

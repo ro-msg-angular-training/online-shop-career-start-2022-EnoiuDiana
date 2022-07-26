@@ -10,6 +10,8 @@ import {AppState} from "../state/app.state";
 import {selectOneProduct} from "../state/selectors/product.selectors";
 import {addToCart, deleteProduct, getProduct} from "../state/actions/product.actions";
 import {ProductInCart} from "../interfaces/ProductInCart";
+import {selectLoggedInUser} from "../state/selectors/login.selectors";
+import {User} from "../interfaces/User";
 
 @Component({
   selector: 'app-product-details',
@@ -23,6 +25,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   id: number | undefined;
   userIsAdmin = false;
   userIsCustomer = false;
+  user: User | undefined;
 
   productSubs: Subscription | undefined
 
@@ -32,18 +35,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private auth: AuthService, //to delete
               private store: Store<AppState>) { }
 
   public productDetails$ = this.store.select(selectOneProduct)
+  public user$ = this.store.select(selectLoggedInUser)
+  userSubs : Subscription | undefined
 
   ngOnInit(): void {
     this.getProduct();
-    this.getUserRoles()
+    this.getUserRoles();
   }
 
   ngOnDestroy() {
     this.productSubs?.unsubscribe()
+    this.userSubs?.unsubscribe()
   }
 
   getProduct(): void {
@@ -53,8 +58,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   getUserRoles() {
-    this.userIsAdmin = this.auth.verifyAdmin()
-    this.userIsCustomer = this.auth.verifyCustomer()
+    this.userSubs = this.user$.subscribe((user) => this.user = user)
+    this.userIsAdmin = !!this.user?.roles.includes('admin');
+    this.userIsCustomer = !!this.user?.roles.includes('customer');
   }
 
   goBack(): void {
