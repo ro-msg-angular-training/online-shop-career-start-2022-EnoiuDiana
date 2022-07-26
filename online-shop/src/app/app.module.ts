@@ -28,6 +28,9 @@ import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ProductEffects} from "./state/effects/product.effects";
 import {RouteReuseStrategy} from "@angular/router";
+import {loginReducer} from "./state/reducers/login.reducer";
+import {LoginEffects} from "./state/effects/login.effects";
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,8 @@ import {RouteReuseStrategy} from "@angular/router";
     ShoppingCartComponent,
     EditProductComponent,
     AddProductComponent,
-    LoginComponent
+    LoginComponent,
+    NavigationBarComponent
   ],
   imports: [
     BrowserModule,
@@ -52,12 +56,12 @@ import {RouteReuseStrategy} from "@angular/router";
     MatCheckboxModule,
     MatChipsModule,
     MatCardModule,
-    StoreModule.forRoot({products: productReducer}),
-    EffectsModule.forRoot([ProductEffects]),
+    StoreModule.forRoot({products: productReducer, login: loginReducer}, {}),
+    EffectsModule.forRoot([ProductEffects, LoginEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot()
   ],
-  providers: [],
+  providers: [NavigationBarComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

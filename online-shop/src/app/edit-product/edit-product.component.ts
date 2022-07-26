@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {ProductsService} from "../services/products.service";
-import {Product} from "../product-interfaces/Product";
+import {Product} from "../interfaces/Product";
 import {Subject, Subscription} from "rxjs";
 import {AppState} from "../state/app.state";
 import {Store} from "@ngrx/store";
@@ -30,7 +30,6 @@ export class EditProductComponent implements OnInit, OnDestroy {
   productSubs: Subscription | undefined
 
   constructor(private fb: FormBuilder,
-              private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
               private store: Store<AppState>) { }

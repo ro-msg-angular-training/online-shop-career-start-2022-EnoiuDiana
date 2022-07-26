@@ -4,12 +4,12 @@ import {ProductsService} from "../services/products.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
-import {Product} from "../product-interfaces/Product";
+import {Product} from "../interfaces/Product";
 import {Store} from "@ngrx/store";
 import {AppState} from "../state/app.state";
 import {selectOneProduct} from "../state/selectors/product.selectors";
 import {addToCart, deleteProduct, getProduct} from "../state/actions/product.actions";
-import {ProductInCart} from "../product-interfaces/ProductInCart";
+import {ProductInCart} from "../interfaces/ProductInCart";
 
 @Component({
   selector: 'app-product-details',
@@ -30,10 +30,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     quantity: new FormControl(''),
   })
 
-  constructor(private productsService: ProductsService,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private router: Router,
-              private auth: AuthService,
+              private auth: AuthService, //to delete
               private store: Store<AppState>) { }
 
   public productDetails$ = this.store.select(selectOneProduct)

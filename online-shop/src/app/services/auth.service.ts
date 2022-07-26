@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {UserCredentials} from "../interfaces/UserCredentials";
+import {User} from "../interfaces/User";
 
 @Injectable({
   providedIn: 'root'
@@ -16,19 +18,15 @@ export class AuthService {
 // store the URL so we can redirect after logging in
   redirectUrl: string | null = null;
 
-  login(username: string, password: string) {
-    const data = {
-      username: username,
-      password: password
-    }
-    return this.http.post(environment.ROOT_URL + "/login", data)
+  login(userCredentials: UserCredentials) {
+    return this.http.post<User>(environment.ROOT_URL + "/login", userCredentials)
   }
 
-  changeLogInTrue(userLoggedIn: any) {
+  changeLogInTrue(userLoggedIn: User) {
     this.isLoggedIn = true;
     localStorage.setItem("loggedInUsername", userLoggedIn.username)
     localStorage.setItem("loggedInPassword", userLoggedIn.password)
-    localStorage.setItem("loggedInRoles", userLoggedIn.roles)
+    localStorage.setItem("loggedInRoles", userLoggedIn.roles.toString())
   }
 
   getLoggedInUsername() {

@@ -8,6 +8,7 @@ import {EditProductComponent} from "./edit-product/edit-product.component";
 import {AddProductComponent} from "./add-product/add-product.component";
 import {AuthGuard} from "./auth/auth.guard";
 import {LoginComponent} from "./login/login.component";
+import {NavigationBarComponent} from "./navigation-bar/navigation-bar.component";
 
 const routes: Routes = [
   {path: '',component: HomeComponent,pathMatch: 'full'},

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductsService} from "../services/products.service";
 import {AuthService} from "../services/auth.service";
-import {Product} from "../product-interfaces/Product";
+import {Product} from "../interfaces/Product";
 import {Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {loadProducts} from "../state/actions/product.actions";
@@ -15,9 +15,7 @@ import {AppState} from "../state/app.state";
 })
 export class ProductComponent implements OnInit, OnDestroy {
 
-  constructor(private productsService: ProductsService,
-              private auth: AuthService,
-              private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {}
 
 
   public allProducts$ = this.store.select(selectAllProducts);

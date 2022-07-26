@@ -24,7 +24,7 @@ import { switchMap, catchError, map, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { selectAllProducts } from "../selectors/product.selectors";
 import { AppState } from '../app.state';
-import {ProductDisplay} from "../../product-interfaces/ProductDisplay";
+import {ProductDisplay} from "../../interfaces/ProductDisplay";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Injectable()

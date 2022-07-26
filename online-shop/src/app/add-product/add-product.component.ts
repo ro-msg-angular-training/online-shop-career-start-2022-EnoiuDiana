@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AppState} from "../state/app.state";
 import {Store} from "@ngrx/store";
 import {addProduct} from "../state/actions/product.actions";
-import {ProductAdd} from "../product-interfaces/ProductAdd";
+import {ProductAdd} from "../interfaces/ProductAdd";
 
 @Component({
   selector: 'app-add-product',
@@ -23,7 +23,6 @@ export class AddProductComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder,
-              private productsService: ProductsService,
               private route: ActivatedRoute,
               private router: Router,
               private store: Store<AppState>) { }

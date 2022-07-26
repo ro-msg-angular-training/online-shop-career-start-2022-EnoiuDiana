@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
-import {ProductDisplay} from "../../product-interfaces/ProductDisplay";
-import {Product} from "../../product-interfaces/Product";
-import { ProductAdd} from "../../product-interfaces/ProductAdd";
-import {ProductInCart} from "../../product-interfaces/ProductInCart";
-import {ProductCheckoutData} from "../../product-interfaces/ProductCheckoutData";
+import {ProductDisplay} from "../../interfaces/ProductDisplay";
+import {Product} from "../../interfaces/Product";
+import {ProductAdd} from "../../interfaces/ProductAdd";
+import {ProductInCart} from "../../interfaces/ProductInCart";
+import {ProductCheckoutData} from "../../interfaces/ProductCheckoutData";
 
 
 //show products

@@ -1,4 +1,4 @@
-import { Product} from "../../product-interfaces/Product";
+import { Product} from "../../interfaces/Product";
 import {createReducer, on} from "@ngrx/store";
 import {
   addProduct,
@@ -15,8 +15,8 @@ import {
   loadProductsFailure,
   loadProductsSuccess
 } from "../actions/product.actions";
-import {ProductDisplay} from "../../product-interfaces/ProductDisplay";
-import {ProductInCart} from "../../product-interfaces/ProductInCart";
+import {ProductDisplay} from "../../interfaces/ProductDisplay";
+import {ProductInCart} from "../../interfaces/ProductInCart";
 
 export interface ProductState {
 

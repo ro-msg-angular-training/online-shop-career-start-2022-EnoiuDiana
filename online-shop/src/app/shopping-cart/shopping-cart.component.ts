@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductsService} from "../services/products.service";
 import {AuthService} from "../services/auth.service";
-import {Product} from "../product-interfaces/Product";
-import {ProductInCart} from "../product-interfaces/ProductInCart";
+import {Product} from "../interfaces/Product";
+import {ProductInCart} from "../interfaces/ProductInCart";
 import {AppState} from "../state/app.state";
 import {Store} from "@ngrx/store";
 import {selectProductsInCart} from "../state/selectors/product.selectors";
 import {Observable, Subscription} from "rxjs";
-import {ProductCheckoutData} from "../product-interfaces/ProductCheckoutData";
+import {ProductCheckoutData} from "../interfaces/ProductCheckoutData";
 import {checkout, deleteFromCart} from "../state/actions/product.actions";
 
 @Component({
@@ -21,7 +21,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   orderPlaced = false;
 
-  constructor(private productService: ProductsService, private auth: AuthService, private store: Store<AppState>) { }
+  constructor(private auth: AuthService, private store: Store<AppState>) { }
 
   public productsInCart$ = this.store.select(selectProductsInCart);
 
