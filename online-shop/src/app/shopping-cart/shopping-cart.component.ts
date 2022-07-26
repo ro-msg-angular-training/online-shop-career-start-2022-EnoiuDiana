@@ -50,9 +50,9 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     if(this.user?.username) {
       //extract only the id of products and quantity in an array
       let dataProducts: {productId: number, quantity: number}[] = []
-      for(let product1 of this.productsInCart) {
-        let productId = product1.product.id
-        let quantity = product1.quantity
+      for(let product of this.productsInCart) {
+        let productId = product.product.id
+        let quantity = product.quantity
         dataProducts.push({productId, quantity})
       }
 

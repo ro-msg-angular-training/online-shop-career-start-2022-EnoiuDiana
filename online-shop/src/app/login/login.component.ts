@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       password: formValue.password
     }
 
-    this.store.dispatch(login({userCredentials: userCredentials}))
+    this.store.dispatch(login({userCredentials}))
   }
 
 }

@@ -46,7 +46,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
 
   getProduct() {
     const id = parseInt(<string>this.route.snapshot.paramMap.get('id'));
-    this.store.dispatch(getProduct({id: id}))
+    this.store.dispatch(getProduct({ id }))
     this.productSubs = this.productDetails$.subscribe((product) => {
       this.product = product
       this.initializeForm()

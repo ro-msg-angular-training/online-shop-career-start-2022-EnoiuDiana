@@ -26,7 +26,7 @@ export class AuthService {
     this.isLoggedIn = true;
     localStorage.setItem("loggedInUsername", userLoggedIn.username)
     localStorage.setItem("loggedInPassword", userLoggedIn.password)
-    localStorage.setItem("loggedInRoles", userLoggedIn.roles.toString())
+    localStorage.setItem("loggedInRoles", JSON.stringify(userLoggedIn.roles))
   }
 
   getLoggedInUsername() {

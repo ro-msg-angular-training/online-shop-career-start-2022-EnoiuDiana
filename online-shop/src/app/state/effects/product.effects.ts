@@ -3,19 +3,15 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   loadProducts,
   loadProductsSuccess,
-  loadProductsFailure,
   getProduct,
   getProductSuccess,
-  getProductFailure,
   addProduct,
   addProductSuccess,
-  addProductFailure,
   deleteProduct,
   deleteProductSuccess,
-  deleteProductFailure,
   editProduct,
   editProductSuccess,
-  editProductFailure, checkout
+  checkout, failure
 } from '../actions/product.actions';
 
 import { ProductsService } from "../../services/products.service";
@@ -46,7 +42,7 @@ export class ProductEffects {
           // Take the returned value and return a new success action containing the products
           map((products) => loadProductsSuccess({products: products})),
           // Or... if it errors return a new failure action containing the error
-          catchError((error) => of(loadProductsFailure({error})))
+          catchError((error) => of(failure({error})))
         )
       )
     )
@@ -59,7 +55,7 @@ export class ProductEffects {
       switchMap((action) =>
         from(this.productService.getProductById(action.id)).pipe(
           map((product) => getProductSuccess({product: product})),
-          catchError((error) => of(getProductFailure({error})))
+          catchError((error) => of(failure({error})))
         )
       )
     )
@@ -71,7 +67,7 @@ export class ProductEffects {
       switchMap((action) =>
         from(this.productService.addProduct(action.product)).pipe(
           map((product) => addProductSuccess({product: product})),
-          catchError((error) => of(addProductFailure({error})))
+          catchError((error) => of(failure({error})))
         )
       )
     )
@@ -83,7 +79,7 @@ export class ProductEffects {
       switchMap((action) =>
         from(this.productService.deleteProductById(action.id)).pipe(
           map((response) => deleteProductSuccess({response: response})),
-          catchError((error) => of(deleteProductFailure({error})))
+          catchError((error) => of(failure({error})))
         )
       )
     )
@@ -95,7 +91,7 @@ export class ProductEffects {
       switchMap((action) =>
         from(this.productService.updateProducts(action.id, action.product)).pipe(
           map((response) => editProductSuccess({response: response})),
-          catchError((error) => of(editProductFailure({error})))
+          catchError((error) => of(failure({error})))
         )
       )
     )
@@ -107,7 +103,7 @@ export class ProductEffects {
       switchMap((action) =>
         from(this.productService.checkout(action.productCheckoutData).pipe(
           map((response) => editProductSuccess({response: response})),
-          catchError((error) => of(editProductFailure({error})))
+          catchError((error) => of(failure({error})))
         )
       )
     )

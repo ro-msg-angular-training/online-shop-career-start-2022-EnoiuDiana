@@ -68,7 +68,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   deleteProduct(id: number) {
-    this.store.dispatch(deleteProduct({id: id}))
+    this.store.dispatch(deleteProduct({ id }))
     this.goBack()
   }
 
@@ -79,7 +79,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         product: this.product,
         quantity: formValue.quantity
       }
-      this.store.dispatch(addToCart({productToAdd: productToAdd}))
+      this.store.dispatch(addToCart({productToAdd}))
       this.goBack()
     }
   }

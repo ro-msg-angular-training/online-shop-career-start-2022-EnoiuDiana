@@ -1,6 +1,6 @@
-//import {Product} from "./Product";
+import {Product} from "./Product";
 
 export interface ProductInCart {
-  product: any,
+  product: Product,
   quantity: number
 }

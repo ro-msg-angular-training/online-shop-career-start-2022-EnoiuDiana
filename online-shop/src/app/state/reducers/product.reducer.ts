@@ -2,17 +2,13 @@ import { Product} from "../../interfaces/Product";
 import {createReducer, on} from "@ngrx/store";
 import {
   addProduct,
-  addProductFailure,
-  addProductSuccess, addToCart, checkout, checkoutFailure, checkoutSuccess, deleteFromCart,
+  addProductSuccess, addToCart, checkout, checkoutSuccess, deleteFromCart,
   deleteProduct,
-  deleteProductFailure,
   deleteProductSuccess,
-  editProduct, editProductFailure, editProductSuccess,
+  editProduct, editProductSuccess, failure,
   getProduct,
-  getProductFailure,
   getProductSuccess,
   loadProducts,
-  loadProductsFailure,
   loadProductsSuccess
 } from "../actions/product.actions";
 import {ProductDisplay} from "../../interfaces/ProductDisplay";
@@ -53,7 +49,7 @@ export const productReducer = createReducer(
   })),
 
   // Handle products load failure
-  on(loadProductsFailure, (state, { error }) => ({
+  on(failure, (state, { error }) => ({
     ...state,
     error: error,
     status: 'error',
@@ -68,12 +64,6 @@ export const productReducer = createReducer(
     status: 'success',
   })),
 
-  on(getProductFailure, (state, { error }) => ({
-    ...state,
-    error: error,
-    status: 'error',
-  })),
-
   on(addProduct, (state) => ({
     ...state,
     status: 'loading'
@@ -82,10 +72,6 @@ export const productReducer = createReducer(
   on(addProductSuccess, (state) => ({
     ...state,
     status: 'success'
-  })),
-  on(addProductFailure, (state) => ({
-    ...state,
-    status: 'error'
   })),
 
   on(deleteProduct, (state) => ({
@@ -98,11 +84,6 @@ export const productReducer = createReducer(
     status: 'success'
   })),
 
-  on(deleteProductFailure, (state) => ({
-    ...state,
-    status: 'error'
-  })),
-
   on(editProduct, (state) => ({
     ...state,
     status: 'loading'
@@ -111,11 +92,6 @@ export const productReducer = createReducer(
   on(editProductSuccess, (state) => ({
     ...state,
     status: 'success'
-  })),
-
-  on(editProductFailure, (state) => ({
-    ...state,
-    status: 'error'
   })),
 
   on(addToCart, (state, {productToAdd}) => ({
@@ -139,12 +115,6 @@ export const productReducer = createReducer(
     ...state,
     error: null,
     status: 'success'
-  })),
-
-  on(checkoutFailure, (state, {error}) => ({
-    ...state,
-    error: error,
-    status: 'error'
   }))
 
 )

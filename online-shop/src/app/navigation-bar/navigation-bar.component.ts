@@ -1,5 +1,4 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {AuthService} from "../services/auth.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppState} from "../state/app.state";
 import {Store} from "@ngrx/store";
 import {selectLoggedInUser} from "../state/selectors/login.selectors";

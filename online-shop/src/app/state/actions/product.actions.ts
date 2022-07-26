@@ -14,8 +14,8 @@ export const loadProductsSuccess = createAction(
   props<{ products: ProductDisplay[] }>()
 );
 
-export const loadProductsFailure = createAction(
-  '[Product API] Products Load Failure',
+export const failure = createAction(
+  '[Product API] Failure',
   props<{ error: string }>()
 );
 
@@ -30,10 +30,6 @@ export const getProductSuccess = createAction(
   props<{product: Product}>()
 )
 
-export const getProductFailure = createAction(
-  '[Product API] Get Product Failure',
-  props<{ error: string }>()
-)
 
 //add product
 export const addProduct = createAction(
@@ -46,10 +42,6 @@ export const addProductSuccess = createAction(
   props<{product: Product}>()
 )
 
-export const addProductFailure = createAction(
-  '[Product API] Add product failure',
-  props<{error: string}>()
-)
 
 //delete product
 export const deleteProduct = createAction(
@@ -62,10 +54,6 @@ export const deleteProductSuccess = createAction(
   props<{response: string}>()
 )
 
-export const deleteProductFailure = createAction(
-  '[Product API] Delete product failure',
-  props<{error: string}>()
-)
 
 //edit product
 export const editProduct = createAction(
@@ -78,10 +66,6 @@ export const editProductSuccess = createAction(
   props<{response: string}>()
 )
 
-export const editProductFailure = createAction(
-  '[Product API] Edit product failure',
-  props<{error: string}>()
-)
 
 //add to cart product
 export const addToCart = createAction(
@@ -103,10 +87,5 @@ export const checkout = createAction(
 export const checkoutSuccess = createAction(
   '[Product API] Checkout success',
   props<{response: string}>()
-)
-
-export const checkoutFailure = createAction(
-  '[Product API] Checkout failure',
-  props<{error: string}>()
 )
 

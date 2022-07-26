@@ -34,11 +34,7 @@ export class AddProductComponent implements OnInit {
     const formValue = this.addProductForm.value;
 
     const data: ProductAdd = {
-      "name": formValue.name,
-      "category": formValue.category,
-      "image": formValue.image,
-      "price": formValue.price,
-      "description": formValue.description
+      ...formValue
     }
 
     this.store.dispatch(addProduct({product: data}))
