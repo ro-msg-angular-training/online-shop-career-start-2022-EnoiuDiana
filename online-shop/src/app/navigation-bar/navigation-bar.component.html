@@ -1,0 +1,10 @@
+<header>
+  <img src="assets/1280px-Logo_eMAG.svg.png"
+       width="200" height="50">
+  <ul>
+    <li><a i18n routerLink="/">Homepage</a></li>
+    <li><a i18n routerLink="/show_products">Show Products</a></li>
+    <li><a i18n *ngIf="isUserCustomer()" routerLink="/shopping_cart">Shopping Cart</a></li>
+    <li><a i18n *ngIf="isUserAdmin()" routerLink="/add_product">New Product</a></li>
+  </ul>
+</header>

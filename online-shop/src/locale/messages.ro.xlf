@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="8797822016045639068" datatype="html">
+        <source>Submit changes</source>
+        <target>Salveaza schimbarile</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/add-product/add-product.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-product/edit-product.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2159130950882492111" datatype="html">
+        <source>Cancel</source>
+        <target>Renunta</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/add-product/add-product.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/edit-product/edit-product.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3240027213625192094" datatype="html">
+        <source>Welcome to our Online Shop!</source>
+        <target>Bine ai venit la magazinul nostru online!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2454050363478003966" datatype="html">
+        <source>Login</source>
+        <target>Logheaza-te</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1305357231288135414" datatype="html">
+        <source>Homepage</source>
+        <target>Pagina principala</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/navigation-bar/navigation-bar.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5298700920591751050" datatype="html">
+        <source>Show Products</source>
+        <target>Vezi produsele</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/navigation-bar/navigation-bar.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6161065192192983636" datatype="html">
+        <source>Shopping Cart</source>
+        <target>Cos de cumparaturi</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/navigation-bar/navigation-bar.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2982087611131074586" datatype="html">
+        <source>New Product</source>
+        <target>Adauga Produs</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/navigation-bar/navigation-bar.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8890553633144307762" datatype="html">
+        <source>Back</source>
+        <target>Inapoi</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/product-details/product-details.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1358803443456357055" datatype="html">
+        <source>Add to Cart</source>
+        <target>Adauga in Cos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/product-details/product-details.component.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7585826646011739428" datatype="html">
+        <source>Edit</source>
+        <target>Editeaza</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/product-details/product-details.component.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7022070615528435141" datatype="html">
+        <source>Delete</source>
+        <target>Sterge</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/product-details/product-details.component.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="862293217499790718" datatype="html">
+        <source>Category: <x id="INTERPOLATION" equiv-text="{{product.category}}"/></source>
+        <target>Categorie: <x id="INTERPOLATION" equiv-text="{{product.category}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/product/product.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping-cart/shopping-cart.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5696244706071223399" datatype="html">
+        <source>Price: <x id="INTERPOLATION" equiv-text="{{product.price}}"/></source>
+        <target>Pret: <x id="INTERPOLATION" equiv-text="{{product.price}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/product/product.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping-cart/shopping-cart.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5028777105388019087" datatype="html">
+        <source>Details</source>
+        <target>Detalii</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/product/product.component.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8121541100768866697" datatype="html">
+        <source>Quantity: <x id="INTERPOLATION" equiv-text="{{product.quantity}}"/></source>
+        <target>Cantitate: <x id="INTERPOLATION" equiv-text="{{product.quantity}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping-cart/shopping-cart.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4231798911224847181" datatype="html">
+        <source>Place Order</source>
+        <target>Plaseaza Comanda</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping-cart/shopping-cart.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3463146017153520056" datatype="html">
+        <source> Order was placed successfully</source>
+        <target> Comanda a fost plasata cu succes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping-cart/shopping-cart.component.html</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

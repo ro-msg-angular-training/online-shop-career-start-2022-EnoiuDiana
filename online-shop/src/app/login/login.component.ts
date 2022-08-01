@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import { AuthService} from "../auth.service";
+import { AuthService} from "../services/auth.service";
 import {Router, Routes} from "@angular/router";
 import { AppComponent} from "../app.component";
+import {UserCredentials} from "../interfaces/UserCredentials";
+import {AppState} from "../state/app.state";
+import {Store} from "@ngrx/store";
+import {login} from "../state/actions/login.actions";
+import {NavigationBarComponent} from "../navigation-bar/navigation-bar.component";
 
 @Component({
   selector: 'app-login',
@@ -20,44 +25,20 @@ export class LoginComponent implements OnInit {
   loggedInSuccessful = false;
   loggInFail = false;
 
-  constructor(private auth: AuthService, private router: Router, private navigation: AppComponent) { }
+  constructor(private router: Router,
+              private store: Store<AppState>) { }
 
   ngOnInit(): void {
   }
 
   submitLogin() {
     const formValue = this.loginForm.value;
-    this.auth.login(formValue.username, formValue.password).subscribe(
-      (val) => {
-        console.log("POST call successful value returned in body",
-          val);
-        this.auth.changeLogInTrue(val)
+    const userCredentials : UserCredentials = {
+      username: formValue.username,
+      password: formValue.password
+    }
 
-        //update states
-        this.loggedInSuccessful = true;
-        this.loggInFail = false;
-
-        //update buttons from navigation
-        this.navigation.updateUserData()
-
-        //redirect
-        if(this.auth.redirectUrl != null) {
-          this.router.navigate([this.auth.redirectUrl]).then();
-        } else {
-          this.router.navigate([""]).then();
-        }
-      },
-      response => {
-        console.log("POST call in error", response);
-        this.auth.changeLogInFalse()
-        //update states log in fail
-        this.loggInFail = true;
-        this.loggedInSuccessful = false;
-      },
-      () => {
-        console.log("The POST observable is now completed.");
-      }
-    )
+    this.store.dispatch(login({userCredentials}))
   }
 
 }

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ProductsService} from "../products.service";
+import {ProductsService} from "../services/products.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {AppState} from "../state/app.state";
+import {Store} from "@ngrx/store";
+import {addProduct} from "../state/actions/product.actions";
+import {ProductAdd} from "../interfaces/ProductAdd";
 
 @Component({
   selector: 'app-add-product',
@@ -19,36 +23,21 @@ export class AddProductComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder,
-              private productsService: ProductsService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private store: Store<AppState>) { }
 
   ngOnInit(): void {
   }
 
-
   submitHandler() {
     const formValue = this.addProductForm.value;
 
-    const data = {
-      "name": formValue.name,
-      "category": formValue.category,
-      "image": formValue.image,
-      "price": formValue.price,
-      "description": formValue.description
+    const data: ProductAdd = {
+      ...formValue
     }
 
-    this.productsService.addProduct(data).subscribe(
-      (val) => {
-        console.log("POST call successful value returned in body",
-          val);
-      },
-        response => {
-          console.log("POST call in error", response);
-        },
-        () => {
-          console.log("The POST observable is now completed.");
-        })
+    this.store.dispatch(addProduct({product: data}))
 
     this.goBack();
 

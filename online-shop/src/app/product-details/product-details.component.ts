@@ -1,24 +1,31 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {audit, Observable, of, Subscription} from "rxjs";
-import {ProductsService} from "../products.service";
+import {ProductsService} from "../services/products.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import { Location } from '@angular/common';
-import {HttpClient} from "@angular/common/http";
 import {FormControl, FormGroup} from "@angular/forms";
-import {AuthService} from "../auth.service";
-import {Product} from "../Product";
+import {AuthService} from "../services/auth.service";
+import {Product} from "../interfaces/Product";
+import {Store} from "@ngrx/store";
+import {AppState} from "../state/app.state";
+import {selectOneProduct} from "../state/selectors/product.selectors";
+import {addToCart, deleteProduct, getProduct} from "../state/actions/product.actions";
+import {ProductInCart} from "../interfaces/ProductInCart";
+import {selectLoggedInUser} from "../state/selectors/login.selectors";
+import {User} from "../interfaces/User";
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
+
 export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   product: Product | undefined;
   id: number | undefined;
   userIsAdmin = false;
   userIsCustomer = false;
+  user: User | undefined;
 
   productSubs: Subscription | undefined
 
@@ -26,29 +33,34 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     quantity: new FormControl(''),
   })
 
-  constructor(private productsService: ProductsService,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private router: Router,
-              private auth: AuthService) { }
+              private store: Store<AppState>) { }
+
+  public productDetails$ = this.store.select(selectOneProduct)
+  public user$ = this.store.select(selectLoggedInUser)
+  userSubs : Subscription | undefined
 
   ngOnInit(): void {
     this.getProduct();
-    this.getUserRoles()
+    this.getUserRoles();
   }
 
   ngOnDestroy() {
     this.productSubs?.unsubscribe()
+    this.userSubs?.unsubscribe()
   }
 
   getProduct(): void {
     this.id = parseInt(<string>this.route.snapshot.paramMap.get('id'));
-    this.productSubs = this.productsService.getProductById(this.id)
-      .subscribe(product => this.product = product);
+    this.store.dispatch(getProduct({id: this.id}))
+    this.productSubs = this.productDetails$.subscribe((product) => this.product = product)
   }
 
   getUserRoles() {
-    this.userIsAdmin = this.auth.verifyAdmin()
-    this.userIsCustomer = this.auth.verifyCustomer()
+    this.userSubs = this.user$.subscribe((user) => this.user = user)
+    this.userIsAdmin = !!this.user?.roles.includes('admin');
+    this.userIsCustomer = !!this.user?.roles.includes('customer');
   }
 
   goBack(): void {
@@ -56,23 +68,19 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   deleteProduct(id: number) {
-    this.productsService.deleteProductById(id).subscribe(
-      (val) => {
-        console.log("POST call successful value returned in body",
-          val);
-      },
-      response => {
-        console.log("POST call in error", response);
-      },
-      () => {
-        console.log("The POST observable is now completed.");
-      });
+    this.store.dispatch(deleteProduct({ id }))
     this.goBack()
   }
 
   addToCartButtonPressed() {
     const formValue = this.quantityForm.value;
-    this.productsService.addProductToCart(this.product, formValue.quantity)
-    this.goBack()
+    if(this.product) {
+      const productToAdd: ProductInCart = {
+        product: this.product,
+        quantity: formValue.quantity
+      }
+      this.store.dispatch(addToCart({productToAdd}))
+      this.goBack()
+    }
   }
 }

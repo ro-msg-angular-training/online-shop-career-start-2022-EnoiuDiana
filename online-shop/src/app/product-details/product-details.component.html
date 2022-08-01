@@ -1,5 +1,5 @@
 <div class="container-1">
-  <div *ngIf="product">
+  <div *ngIf="(productDetails$ | async) as product">
     <h1>{{product.name}}</h1>
     <img src="{{product.image}}">
     <p>{{product.description}}</p>
@@ -8,12 +8,12 @@
         <input matInput type="text" placeholder = "quantity" formControlName = "quantity">
       </mat-form-field>
     </p>
-    <button mat-raised-button color="basic" type="button" (click)="goBack()">Back</button>
-    <button mat-raised-button color="primary" type="button"
+    <button mat-raised-button i18n color="basic" type="button" (click)="goBack()">Back</button>
+    <button mat-raised-button i18n color="primary" type="button"
             *ngIf="userIsCustomer" (click)="addToCartButtonPressed()">Add to Cart</button>
-    <button mat-raised-button color="primary" type="button"
+    <button mat-raised-button i18n color="primary" type="button"
             *ngIf="userIsAdmin" routerLink="/edit_product/{{product.id}}">Edit</button>
-    <button mat-raised-button color="warn" type="button"
+    <button mat-raised-button i18n color="warn" type="button"
             *ngIf="userIsAdmin" (click)="deleteProduct(product.id)">Delete</button>
   </div>
 </div>

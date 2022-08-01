@@ -10,12 +10,9 @@
       <input matInput type="password" placeholder = "password" formControlName = "password">
     </mat-form-field>
 
-    <button mat-raised-button
+    <button mat-raised-button i18n
             [disabled]="loginForm.invalid"
             color="primary" type="submit" (click)="submitLogin()">Login</button>
 
-    <p *ngIf="loggInFail">
-      Authentication failed: username or password is not correct
-    </p>
   </div>
 </div>
